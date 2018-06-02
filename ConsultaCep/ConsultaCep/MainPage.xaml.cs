@@ -20,7 +20,7 @@ namespace ConsultaCep
 
         private void BuscaCep(object sender, EventArgs args)
         {
-            string cep = txtCep.Text.Trim();
+            string cep = (!string.IsNullOrEmpty(txtCep.Text)) ? txtCep.Text.Trim() : "";
 
             if (isValidCEP(cep))
             {
@@ -47,8 +47,13 @@ namespace ConsultaCep
             //bool valido = true;
             if(cep.Length != 8)
             {
-                DisplayAlert("Erro","CEP inválido! O CEP deve conter 8 caracteres","OK");
-                return false;
+                if(cep.Length == 0){
+                    DisplayAlert("Alerta", "Favor digitar um CEP para poder fazer a pesquisa", "OK");
+                    return false;
+                }else{
+                    DisplayAlert("Erro", "CEP inválido! O CEP deve conter 8 caracteres", "OK");
+                    return false;
+                }
             }
             int novoCep = 0;
             if(!int.TryParse(cep,out novoCep))
